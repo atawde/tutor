@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Portal</title>
+</head>
+<body>
+
+<h1>Textbook Audio Generator</h1>
+
+<label>Subject & Lesson</label>
+<select id="subject"></select>
+
+<br><br>
+
+<div id="lessons-container"></div>
+<hr>
+
+
+<script>
+
+window.onload = function () {
+    loadSubjects();
+};
+
+async function loadSubjects() {
+
+    const response = await fetch('/student/subjects');
+    const subjects = await response.json();
+
+    let html = '<option value="">Select Subject & Lesson</option>';
+
+    subjects.forEach(subject => {
+        html += `<option value="${subject.id}">${subject.name} - ${subject.lesson}</option>`;
+    });
+
+    document.getElementById("subject").innerHTML = html;
+    document.getElementById("subject").addEventListener("change", function () {
+       const subjectId = this.value;   // Selected subject's ID
+       loadLessons(subjectId);
+    });
+}
+
+async function loadLessons(subjectId) {
+
+    const response = await fetch(`/student/lessons/${subjectId}`);
+    const lessons = await response.json();
+
+    if (lessons.length === 0) {
+        document.getElementById("lessons-container").innerHTML =
+           "<p>No audio lessons available for this subject.</p>";
+        return;
+    }
+
+    let html = `
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Chapter</th>
+                <th>Audio</th>
+            </tr>
+    `;
+
+    lessons.forEach(lesson => {
+
+        const filename = lesson.audio_url.split(/[\\/]/).pop();
+        const audioUrl = "/audio/" + filename;
+
+        html += `
+            <tr>
+                <td>${lesson.chapter_title}</td>
+                <td>
+                    <audio controls preload="auto" src="${audioUrl}"></audio>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += "</table>";
+
+    const container = document.getElementById("lessons-container");
+
+    if (container.innerHTML !== html) {
+        container.innerHTML = html;
+    }
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+</head>
+<body>
+
+<h1>Textbook Audio Generator</h1>
+
+<h2>Upload PDF</h2>
+
+<form action="/admin/upload-pdf" method="post" enctype="multipart/form-data">
+
+    <label>Subject Name:</label>
+    <input type="text" name="subject_name" required>
+    <label>Lesson Name:</label>
+    <input type="text" name="lesson_name" required>
+
+    <br><br>
+
+    <input type="file" name="file" accept=".pdf" required>
+
+    <br><br>
+
+    <button type="submit">Upload</button>
+
+</form>
+
+<hr>
+
+<h2>Processing Jobs</h2>
+
+<div id="jobs-container">
+    Loading...
+</div>
+
+<hr>
+
+<h2>Generated Lessons</h2>
+
+<div id="lessons-container">
+    Loading...
+</div>
+
+<script>
+
+async function loadJobs() {
+
+    const response = await fetch('/admin/jobs');
+    const jobs = await response.json();
+
+    let html = `
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Status</th>
+            </tr>
+    `;
+
+    jobs.forEach(job => {
+        html += `
+            <tr>
+                <td>${job.id}</td>
+                <td>${job.subject_id}</td>
+                <td>${job.status}</td>
+            </tr>
+        `;
+    });
+
+    html += '</table>';
+
+    document.getElementById("jobs-container").innerHTML = html;
+}
+
+async function loadLessons() {
+
+    const response = await fetch('/admin/lessons');
+    const lessons = await response.json();
+
+    let html = `
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Chapter</th>
+                <th>Audio</th>
+            </tr>
+    `;
+
+    lessons.forEach(lesson => {
+
+        const filename =
+            lesson.audio_url.split(/[\\/]/).pop();
+
+        const audioUrl = "/audio/" + filename;
+
+        html += `
+            <tr>
+                <td>${lesson.id}</td>
+                <td>${lesson.subject}</td>
+                <td>${lesson.lesson}</td>
+                <td>
+                    <audio controls preload="auto" src="${audioUrl}"></audio>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += "</table>";
+
+    const container = document.getElementById("lessons-container");
+
+    if (container.innerHTML !== html) {
+        container.innerHTML = html;
+    }
+}
+
+loadJobs();
+loadLessons();
+
+setInterval(loadJobs, 5000);
+//setInterval(loadLessons, 5000);
+
+</script>
+
+</body>
+</html>

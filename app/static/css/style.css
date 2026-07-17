@@ -1,0 +1,40 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Leave room for fixed header and footer */
+.main-content {
+    position: fixed;
+    top: 4rem;      /* Header height */
+    bottom: 3rem;   /* Footer height */
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;   /* Horizontal */
+    align-items: center;       /* Vertical */
+}
+
+.landing-card {
+    width: 380px;
+    max-width: 90%;
+}
+
+/* Button animation */
+button {
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
