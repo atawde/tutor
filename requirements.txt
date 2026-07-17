@@ -24,16 +24,7 @@ elevenlabs==2.49.0
 etelemetry==0.3.1
 fastapi==0.136.1
 filelock==3.29.0
-google-ai-generativelanguage==0.6.15
-google-api-core==2.30.3
-google-api-python-client==2.196.0
-google-auth==2.53.0
-google-auth-httplib2==0.4.0
-google-generativeai==0.8.6
-googleapis-common-protos==1.75.0
 greenlet==3.5.1
-grpcio==1.80.0
-gTTS==2.5.4
 h11==0.16.0
 httpcore==1.0.9
 httplib2==0.31.2
@@ -58,8 +49,6 @@ pathlib==1.0.1
 pdfminer.six==20260107
 pillow==12.2.0
 prompt_toolkit==3.0.52
-proto-plus==1.28.0
-protobuf==5.29.6
 prov==2.1.1
 puremagic==2.2.0
 pyasn1==0.6.3
