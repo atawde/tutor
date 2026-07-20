@@ -4,6 +4,7 @@ from .routes.student import router as student_router
 from .routes.auth import router as auth_router
 from .routes.home import router as home_router
 from .routes.setup_seed import router as seed_admin_router  
+from .routes.cleanup_db import router as cleanup_db_router
 from .db.base import Base
 from .db.session import engine
 
@@ -19,6 +20,7 @@ app.include_router(student_router)
 app.include_router(auth_router)
 app.include_router(home_router)
 app.include_router(seed_admin_router)
+app.include_router(cleanup_db_router)
 # app.include_router(jobs_router)
 
 
