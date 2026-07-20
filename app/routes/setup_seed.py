@@ -24,8 +24,8 @@ def setup_admin():
                    role="admin"
                 )
             
-            db.add(admin)
-            db.commit()
+                db.add(admin)
+                db.commit()
             
             existing_user = db.query(User).filter(
                 User.name == "Student"
@@ -38,8 +38,8 @@ def setup_admin():
                     password_hash=hash_password("student123"),
                     role="student"
                 )
-            db.add(student)
-            db.commit()
+                db.add(student)
+                db.commit()
                 
             return {"message": "Admin and student created successfully"}
 
