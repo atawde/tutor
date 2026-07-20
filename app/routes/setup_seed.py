@@ -11,7 +11,7 @@ def setup_admin():
 
     db: Session = SessionLocal()
 
-        try:
+    try:
             existing_user = db.query(User).filter(
                 User.name == "Administrator"
             ).first()
