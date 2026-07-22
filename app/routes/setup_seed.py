@@ -57,7 +57,7 @@ def setup_admin():
             # Reset credentials for development
             existing_user.password_hash = hash_password("student123")
             existing_user.role = "student"
-            existing_usert.is_active = True
+            existing_user.is_active = True
                         
         db.commit()   
         return {
