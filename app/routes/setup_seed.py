@@ -29,7 +29,7 @@ def setup_admin():
             User.name == "Student"
         ).first()
 
-        if not student:
+        if not existing_user:
             student = User(
             name="Student",
             email="student@tutor24x7.com",
@@ -40,10 +40,25 @@ def setup_admin():
             db.add(student)
         else:
             # Reset credentials for development
-            student.password_hash = hash_password("student123")
-            student.role = "student"
-            student.is_active = True
-            
+            existing_user = db.query(User).filter(
+            User.name == "Student"
+        ).first()
+
+        if not existing_user:
+            student = User(
+            name="Student",
+            email="student@tutor24x7.com",
+            password_hash=hash_password("student123"),
+            role="student",
+            is_active=True
+            )
+            db.add(student)
+        else:
+            # Reset credentials for development
+            existing_user.password_hash = hash_password("student123")
+            existing_user.role = "student"
+            existing_usert.is_active = True
+                        
         db.commit()   
         return {
             "message": "Admin and student created successfully"
