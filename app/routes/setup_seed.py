@@ -24,7 +24,6 @@ def setup_admin():
                 role="admin"
              )
              db.add(admin)
-             db.commit()
             
         existing_user = db.query(User).filter(
             User.name == "Student"
@@ -38,7 +37,14 @@ def setup_admin():
                  role="student"
              )
              db.add(student)
-             db.commit()              
+            
+        db.commit()   
+        return {
+            "message": "Admin and student created successfully"
+        }
+
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()
-        return {"message": "Admin and student created successfully"}
